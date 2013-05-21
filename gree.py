@@ -9,6 +9,8 @@ f_click = open("click/"+DATE,"r")
 DDates = DATE.split("-")
 Month = DDates[0]+'-'+DDates[1]
 
+is_same_file = 0
+
 setting_list = []
 
 data_dict={}
@@ -179,6 +181,7 @@ for line_ic in f_click:
 
 if os.path.exists('report/Gree-'+DATE+'.csv'):
 	os.remove('report/Gree-'+DATE+'.csv')
+	is_same_file = 1
 g=open('report/Gree-'+DATE+'.csv','a')
 print >>g, "date,sid,device_type,impression,click,install,points,spend($)"
 for setting in data_dict:
@@ -186,12 +189,12 @@ for setting in data_dict:
 		print >>g, DATE+','+str(setting)+','+device_type+','+str(data_dict[setting][device_type]['impression'])+','+str(data_dict[setting][device_type]['click'])+','+str(data_dict[setting][device_type]['install'])+','+str(data_dict[setting][device_type]['spend'])+','+str(int(data_dict[setting][device_type]['spend'])/100)
 
 
-if os.path.exists('report/txt/Gree-'+DATE+'.txt'):
-	os.remove('report/txt/Gree-'+DATE+'.txt')
-g=open('report/txt/Gree-'+DATE+'.txt','a')
-for setting in data_dict:
-	for device_type in data_dict[setting]:
-		print >>g, DATE+','+str(setting)+','+device_type+','+str(data_dict[setting][device_type]['impression'])+','+str(data_dict[setting][device_type]['click'])+','+str(data_dict[setting][device_type]['install'])+','+str(data_dict[setting][device_type]['spend'])+','+str(int(data_dict[setting][device_type]['spend'])/100)
+
+if is_same_file==0:
+	g=open('report/txt/Gree-'+Month+'.txt','a')
+	for setting in data_dict:
+		for device_type in data_dict[setting]:
+			print >>g, DATE+','+str(setting)+','+device_type+','+str(data_dict[setting][device_type]['impression'])+','+str(data_dict[setting][device_type]['click'])+','+str(data_dict[setting][device_type]['install'])+','+str(data_dict[setting][device_type]['spend'])+','+str(int(data_dict[setting][device_type]['spend'])/100)
 
 
 
