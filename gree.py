@@ -1,9 +1,13 @@
 import sys
+import os
 
 DATE = sys.argv[1]
 
 f_install = open("install/"+DATE,"r")
 f_click = open("click/"+DATE,"r")
+
+DDates = DATE.split("-")
+Month = DDates[0]+'-'+DDates[1]
 
 setting_list = []
 
@@ -61,7 +65,6 @@ def handle_install(points,date,device_type,SETTING):
 			data_dict[SETTING_NAME][device_type_translate]["spend"] = data_dict[SETTING_NAME][device_type_translate]["spend"]+ points
 		else:
 			if device_type in ["PHONE","PAD"]:
-				#print 'create '+ str(SETTING)+' from handle_install'
 				data_dict[SETTING_NAME]={
 					"AndroidPHONE":
 					{
@@ -107,13 +110,11 @@ def handle_impression_and_click(date,event_type,sid,device_type):
 		else:
 			device_type_translate = device_type
 		if SETTING_NAME in data_dict:
-			#print event_type
 			if event_type == '-3':
 				data_dict[SETTING_NAME][device_type_translate]["impression"] = data_dict[SETTING_NAME][device_type_translate]["impression"] + 1
 			elif event_type == '-2':
 				data_dict[SETTING_NAME][device_type_translate]["click"] = data_dict[SETTING_NAME][device_type_translate]["click"] + 1
 		else:
-			#print sid + ' is not in data_dict'
 			if device_type in ["PHONE","PAD"]:
 				data_dict[SETTING_NAME]={
 					"AndroidPHONE":
@@ -176,15 +177,22 @@ for line_ic in f_click:
 
 
 
-
-g=open('Gree-'+DATE+'.csv','a')
+if os.path.exists('report/Gree-'+DATE+'.csv'):
+	os.remove('report/Gree-'+DATE+'.csv')
+g=open('report/Gree-'+DATE+'.csv','a')
 print >>g, "date,sid,device_type,impression,click,install,points,spend($)"
 for setting in data_dict:
 	for device_type in data_dict[setting]:
-		#print setting+','+device_type
 		print >>g, DATE+','+str(setting)+','+device_type+','+str(data_dict[setting][device_type]['impression'])+','+str(data_dict[setting][device_type]['click'])+','+str(data_dict[setting][device_type]['install'])+','+str(data_dict[setting][device_type]['spend'])+','+str(int(data_dict[setting][device_type]['spend'])/100)
-#        print g
-#print data_dict
+
+
+if os.path.exists('report/txt/Gree-'+DATE+'.txt'):
+	os.remove('report/txt/Gree-'+DATE+'.txt')
+g=open('report/txt/Gree-'+DATE+'.txt','a')
+for setting in data_dict:
+	for device_type in data_dict[setting]:
+		print >>g, DATE+','+str(setting)+','+device_type+','+str(data_dict[setting][device_type]['impression'])+','+str(data_dict[setting][device_type]['click'])+','+str(data_dict[setting][device_type]['install'])+','+str(data_dict[setting][device_type]['spend'])+','+str(int(data_dict[setting][device_type]['spend'])/100)
+
 
 
 f_install.close()
