@@ -1,4 +1,5 @@
 ### Folders
+***
 
 ```/click```  
 Where you put click raw data, format should be 2013-05-06
@@ -14,6 +15,8 @@ Report separated by month
 
 ### Format of raw data
 
+***
+
 ##### Example of click raw_data:  
 
 ```
@@ -27,6 +30,8 @@ Report separated by month
 ```
 
 ### How to run
+
+***
 
 1.set up folders
 
