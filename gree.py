@@ -182,19 +182,19 @@ for line_ic in f_click:
 if os.path.exists('report/Gree-'+DATE+'.csv'):
 	os.remove('report/Gree-'+DATE+'.csv')
 	is_same_file = 1
-g=open('report/Gree-'+DATE+'.csv','a')
+g=open('report/Daily/Gree-'+DATE+'.csv','a')
 print >>g, "date,sid,device_type,impression,click,install,points,spend($)"
 for setting in data_dict:
 	for device_type in data_dict[setting]:
-		print >>g, DATE+','+str(setting)+','+device_type+','+str(data_dict[setting][device_type]['impression'])+','+str(data_dict[setting][device_type]['click'])+','+str(data_dict[setting][device_type]['install'])+','+str(data_dict[setting][device_type]['spend'])+','+str(int(data_dict[setting][device_type]['spend'])/100)
+		print >>g, DATE+','+str(setting)+','+device_type+','+str(data_dict[setting][device_type]['impression'])+','+str(data_dict[setting][device_type]['click'])+','+str(data_dict[setting][device_type]['install'])+','+str(data_dict[setting][device_type]['spend'])+','+str(int(data_dict[setting][device_type]['spend'])/float(100))
 
 
 
 if is_same_file==0:
-	g=open('report/txt/Gree-'+Month+'.txt','a')
+	g=open('report/Monthly/Gree-'+Month+'.csv','a')
 	for setting in data_dict:
 		for device_type in data_dict[setting]:
-			print >>g, DATE+','+str(setting)+','+device_type+','+str(data_dict[setting][device_type]['impression'])+','+str(data_dict[setting][device_type]['click'])+','+str(data_dict[setting][device_type]['install'])+','+str(data_dict[setting][device_type]['spend'])+','+str(int(data_dict[setting][device_type]['spend'])/100)
+			print >>g, DATE+','+str(setting)+','+device_type+','+str(data_dict[setting][device_type]['impression'])+','+str(data_dict[setting][device_type]['click'])+','+str(data_dict[setting][device_type]['install'])+','+str(data_dict[setting][device_type]['spend'])+','+str(int(data_dict[setting][device_type]['spend'])/float(100))
 
 
 
