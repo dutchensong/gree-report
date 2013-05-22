@@ -2,15 +2,19 @@
 ***
 
 ```/click```  
+
 Where you put click raw data, format should be 2013-05-06
 
-```/install```  
+```/install``` 
+ 
 Where you put install raw data, format should be 2013-05-06
 
 ```/report/Daily```  
+
 Report separated by day
 
 ```/report/Monthly```  
+
 Report separated by month
 
 ### Format of raw data
@@ -41,7 +45,9 @@ Report separated by month
 /report/Daily
 /report/Monthly
 ```
+
 2.Run ```gree.py```
+
 
 ```
 python gree.py 2013-05-06  
