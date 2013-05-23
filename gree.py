@@ -114,7 +114,6 @@ def handle_impression_and_click(date,event_type,sid,device_type):
 			device_type_translate = device_type
 		if SETTING_NAME in data_dict:
 			if event_type == '-3':
-				print SETTING_NAME+' '+device_type_translate
 				data_dict[SETTING_NAME][device_type_translate]["impression"] = data_dict[SETTING_NAME][device_type_translate]["impression"] + 1
 			elif event_type == '-2':
 				data_dict[SETTING_NAME][device_type_translate]["click"] = data_dict[SETTING_NAME][device_type_translate]["click"] + 1
