@@ -6,6 +6,7 @@ DATE = sys.argv[1]
 f_install = open("install/"+DATE,"r")
 f_click = open("click/"+DATE,"r")
 
+
 DDates = DATE.split("-")
 Month = DDates[0]+'-'+DDates[1]
 
@@ -113,6 +114,7 @@ def handle_impression_and_click(date,event_type,sid,device_type):
 			device_type_translate = device_type
 		if SETTING_NAME in data_dict:
 			if event_type == '-3':
+				print SETTING_NAME+' '+device_type_translate
 				data_dict[SETTING_NAME][device_type_translate]["impression"] = data_dict[SETTING_NAME][device_type_translate]["impression"] + 1
 			elif event_type == '-2':
 				data_dict[SETTING_NAME][device_type_translate]["click"] = data_dict[SETTING_NAME][device_type_translate]["click"] + 1
@@ -178,9 +180,8 @@ for line_ic in f_click:
 	handle_impression_and_click(date,event_type,sid,device_type)
 
 
-
-if os.path.exists('report/Gree-'+DATE+'.csv'):
-	os.remove('report/Gree-'+DATE+'.csv')
+if os.path.exists('report/Daily/Gree-'+DATE+'.csv'):
+	os.remove('report/Daily/Gree-'+DATE+'.csv')
 	is_same_file = 1
 g=open('report/Daily/Gree-'+DATE+'.csv','a')
 print >>g, "date,sid,device_type,impression,click,install,points,spend($)"
