@@ -110,6 +110,8 @@ def handle_impression_and_click(date,event_type,sid,device_type):
 		SETTING_NAME=Setting_dict[sid]
 		if device_type in ["PHONE","PAD"]:
 			device_type_translate = "Android"+device_type
+		elif device_type == "PH":
+			device_type_translate = "AndroidPHONE"
 		else:
 			device_type_translate = device_type
 		if SETTING_NAME in data_dict:
