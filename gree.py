@@ -54,17 +54,17 @@ Setting_dict={
 
 # 2013-04-27	1729	2195	PHONE	90
 
-def handle_install(points,date,device_type,SETTING):
-	if points>0 and date==DATE:
-		SETTING_NAME=Setting_dict[SETTING]
+def handle_install(points,date,device_type,SETTING,platform):
+	if (points>10 or points<-10) and date==DATE:
+		SETTING_NAME=Setting_dict[sid]+"_"+platform
 		if device_type in ["PHONE","PAD"]:
 			device_type_translate = "Android"+device_type
 		else:
 			device_type_translate = device_type
 		
 		if SETTING_NAME in data_dict:
-
-			data_dict[SETTING_NAME][device_type_translate]["install"] = data_dict[SETTING_NAME][device_type_translate]["install"]+ 1
+			if points>10:
+				data_dict[SETTING_NAME][device_type_translate]["install"] = data_dict[SETTING_NAME][device_type_translate]["install"]+ 1
 			data_dict[SETTING_NAME][device_type_translate]["spend"] = data_dict[SETTING_NAME][device_type_translate]["spend"]+ points
 		else:
 			if device_type in ["PHONE","PAD"]:
@@ -105,22 +105,33 @@ def handle_install(points,date,device_type,SETTING):
 			data_dict[SETTING_NAME][device_type_translate]["spend"] = data_dict[SETTING_NAME][device_type_translate]["spend"]+ points
 
 
-def handle_impression_and_click(date,event_type,sid,device_type):
+def handle_impression_and_click(date,event_type,sid,device_type,platform,sum_num):
+	SETTING_NAME=Setting_dict[sid]+"_"+platform
+	
 	if date == DATE:
-		SETTING_NAME=Setting_dict[sid]
-		if device_type in ["PHONE","PAD"]:
-			device_type_translate = "Android"+device_type
-		elif device_type == "PH":
-			device_type_translate = "AndroidPHONE"
-		else:
-			device_type_translate = device_type
+
+		if platform == "android":
+			if device_type in ["PHONE","other"]:
+				device_type_translate = "AndroidPHONE"
+			else:
+				device_type_translate = "AndroidPAD"
+		elif platform == "iOS":
+			if device_type in ["iPHONE","other"]:
+				device_type_translate = "iPHONE"
+			else:
+				device_type_translate = "iPAD"
+
+		
+
+		
+
 		if SETTING_NAME in data_dict:
 			if event_type == '-3':
-				data_dict[SETTING_NAME][device_type_translate]["impression"] = data_dict[SETTING_NAME][device_type_translate]["impression"] + 1
+				data_dict[SETTING_NAME][device_type_translate]["impression"] = data_dict[SETTING_NAME][device_type_translate]["impression"] + int(sum_num)
 			elif event_type == '-2':
-				data_dict[SETTING_NAME][device_type_translate]["click"] = data_dict[SETTING_NAME][device_type_translate]["click"] + 1
+				data_dict[SETTING_NAME][device_type_translate]["click"] = data_dict[SETTING_NAME][device_type_translate]["click"] + int(sum_num)
 		else:
-			if device_type in ["PHONE","PAD"]:
+			if device_type_translate in ["AndroidPHONE","AndroidPAD"]:
 				data_dict[SETTING_NAME]={
 					"AndroidPHONE":
 					{
@@ -162,11 +173,12 @@ for line in f_install:
 	items = line[:-1].split("\t")
 
 	sid = int(items[2])
-	points = int(items[4])
+	points = int(items[5])
+	platform = items[4]
 	date = items[0]
 	device_type = items[3]
 
-	handle_install(points,date,device_type,sid)
+	handle_install(points,date,device_type,sid,platform)
 
 
 # handle impression and click file
@@ -177,8 +189,11 @@ for line_ic in f_click:
 	sid = int(items[3])
 	event_type = items[1]
 	device_type = items[4]
+	sum_num = items[6]
+	platform = items[5]
 
-	handle_impression_and_click(date,event_type,sid,device_type)
+	handle_impression_and_click(date,event_type,sid,device_type,platform,sum_num)
+
 
 
 if os.path.exists('report/Daily/Gree-'+DATE+'.csv'):
