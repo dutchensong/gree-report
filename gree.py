@@ -217,3 +217,4 @@ if is_same_file==0:
 
 f_install.close()
 f_click.close()
+g.close()
