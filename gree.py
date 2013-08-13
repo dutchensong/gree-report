@@ -28,8 +28,21 @@ Setting_dict={
 	2508:"Saga",
 	2543:"Modern War",
 	2544:"test111",
-	2545:"Modern War !"
+	2545:"Modern War !",
+	2642:"JackpotSlots",
+	4435:"Call to Arms",
+	4635:"Dragon Realms",
+	4636:"Dragon Realms",
+	4802:"Dragon Realms Android",
+	5188:"Beyond the Dead"
 }
+
+
+sum_impression = 0
+sum_click = 0
+sum_install = 0
+sum_spend = 0
+sum_spend_dollar = 0
 
 # dict = 
 # {
@@ -204,6 +217,13 @@ print >>g, "date,sid,device_type,impression,click,install,points,spend($)"
 for setting in data_dict:
 	for device_type in data_dict[setting]:
 		print >>g, DATE+','+str(setting)+','+device_type+','+str(data_dict[setting][device_type]['impression'])+','+str(data_dict[setting][device_type]['click'])+','+str(data_dict[setting][device_type]['install'])+','+str(data_dict[setting][device_type]['spend'])+','+str(int(data_dict[setting][device_type]['spend'])/float(100))
+		sum_impression = sum_impression + data_dict[setting][device_type]['impression']
+		sum_click = sum_click + data_dict[setting][device_type]['click']
+		sum_install = sum_install + data_dict[setting][device_type]['install']
+		sum_spend = sum_spend + data_dict[setting][device_type]['spend']
+		sum_spend_dollar = float(sum_spend)/100
+
+print >>g,"Total,,,"+str(sum_impression)+","+str(sum_click)+","+str(sum_install)+","+str(sum_spend)+","+str(sum_spend_dollar)
 
 
 
