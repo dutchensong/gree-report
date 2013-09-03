@@ -1,10 +1,11 @@
 import sys
 import os
 
-DATE = sys.argv[1]
+DATE = sys.argv[2]
+report_date = sys.argv[1]
 
-f_install = open("install/"+DATE,"r")
-f_click = open("click/"+DATE,"r")
+f_install = open("install/"+report_date,"r")
+f_click = open("click/"+report_date,"r")
 
 
 DDates = DATE.split("-")
